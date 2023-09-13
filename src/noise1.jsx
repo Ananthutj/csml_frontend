@@ -4,6 +4,7 @@ import './components/noise.css';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
 import { useState, useEffect } from 'react';
 import { dbNoise } from './firebase.config';
@@ -101,15 +102,22 @@ const NoisePage = () => {
     margin: '10px',
   };
 
+  const columnContainer = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center', // Optional: center components horizontally
+    justifyContent: 'flex-start', // Optional: align components to the top
+    gap: '16px', // Optional: space between components
+  };
+
   return (
     <div style={noisePageStyle}>
       <div style={sidebarStyle}>
         <Sidebar />
       </div>
-      <div>
-        <NoiseChart />
-      </div>
-      <div style={contentStyle} >
+
+      <div style={columnContainer}>
+      <div style={contentStyle} md={12}>
         <Row style={{marginTop:'83px',marginRight:'61px'}}>
           <Col xs={12} md={4} >
             <Card style={{ width: '100%', ...cardStyle }}>
@@ -140,6 +148,11 @@ const NoisePage = () => {
           </Col>
         </Row>
       </div>
+
+      <div>
+        <NoiseChart />
+      </div>
+    </div>
     </div>
   );
 };
