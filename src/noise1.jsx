@@ -7,7 +7,6 @@ const NoisePage = () => {
     width: '100vw', // 100% of the viewport width
     height: '100vh', // 100% of the viewport height
     display: 'flex',
-    alignItems: 'center', // Center content vertically
   };
 
 
@@ -16,7 +15,6 @@ const NoisePage = () => {
     padding: '20px', // Add some padding for spacing
     color: 'white',
   };
-
 
   return (
     <div style={noisePageStyle}>
