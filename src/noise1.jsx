@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar'
+import './components/noise.css'
 
 const NoisePage = () => {
   const noisePageStyle = {
@@ -9,8 +10,7 @@ const NoisePage = () => {
     display: 'flex',
   };
 
-
-  const textContainerStyle = {
+ const textContainerStyle = {
     flex: '1', // Allow the text container to take remaining space
     padding: '20px', // Add some padding for spacing
     color: 'white',
@@ -20,7 +20,7 @@ const NoisePage = () => {
     <div style={noisePageStyle}>
      <Sidebar />
       <div style={textContainerStyle}>
-        <h1>Noise Page</h1>
+        <h1 className='heading'>Noise Page</h1>
         </div>
   </div>
   );
