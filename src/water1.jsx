@@ -1,4 +1,5 @@
 import React from 'react';
+import Graph from './Graph';
 
 const WaterPage = () => {
   const waterPageStyle = {
@@ -9,6 +10,7 @@ const WaterPage = () => {
   };
 
   return <div style={waterPageStyle}>
+    <Graph/>
     <h1  style={{color:'white'}}><center>water page</center></h1>
   </div>;
 };
