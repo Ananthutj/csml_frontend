@@ -1,51 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { firestore } from './firebase';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, defs, linearGradient } from 'recharts';
+import {db} from './firebase.config';
+import { collection, getDocs, onSnapshot, query, orderBy} from 'firebase/firestore';
 import './graph.css';
+import Chart from './components/chart';
 
 export default function Graph() {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Define your Firestore collection query here
-  const query = firestore.collection('noise'); // Replace with your collection name
+  // Define your Firestore collection and document path here
+  const collectionPath = 'noise'; // Replace with your collection name
+  const documentId = 'dataByID'; // Replace with the specific document ID
+  const subcollectionPath = 'cBPtGd6rxSRKJ9YpJNpxH7GvJhj1'; // Replace with your subcollection name
 
-  // Use the useCollectionData hook to fetch Firestore data
-  const [queryData] = useCollectionData(query, { idField: 'data' });
+  // Create a reference to the subcollection within the document
+  const decibelLevelsRef = collection(db, `${collectionPath}/${documentId}/${subcollectionPath}`);
+  const levelQuery = query(decibelLevelsRef, orderBy('timestamp', 'asc'), );
 
+  const [decibelLevels, setData] = useState([{ level: 0, time: 0 }]);
+
+  const fetchDecibelLevels = async () => {
+      await getDocs(levelQuery).then((querySnapshot) => {
+          const data = querySnapshot.docs.map(doc => ({ level: parseInt(doc.data().data), time: parseInt(doc.data().timestamp) }));
+          setData(decibelLevels);
+
+          console.log("Decibels: ", data);
+      });
+  };
+
+  // Define a function to listen for real-time updates
+  const subscribeToDecibelLevels = () => {
+
+      const unsubscribe = onSnapshot(levelQuery, (querySnapshot) => {
+          console.log("Snapshot is working");
+          const data = querySnapshot.docs.map(doc => ({ level: parseInt(doc.data().data), time: parseInt(doc.data().timestamp) }));
+          setData(data);
+          console.log("Decibels in subscribe: ", decibelLevels);
+
+      });
+
+      // Return a function that can be used to unsubscribe from the listener
+      return unsubscribe;
+  };
+
+  // Use the useEffect hook to fetch the data once when the component mounts
   useEffect(() => {
-    if (queryData) {
-      setData(queryData);
-      setLoading(false);
-    }
-  }, [queryData]);
+      fetchDecibelLevels();
+  }, []);
+  // Use the useEffect hook to subscribe to real-time updates when the component mounts
+  useEffect(() => {
+      // Call the subscribe function and store the unsubscribe function
+      const unsubscribe = subscribeToDecibelLevels();
 
-  if (loading) {
+      // Return a function that will call the unsubscribe function when the component unmounts
+      return () => {
+          unsubscribe();
+      };
+  }, []);
+
+  if (decibelLevels.length === 0) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="container">
-      <AreaChart
-        width={480}
-        height={350}
-        data={data}
-        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
-      >
-        <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#8884d8" stopOpacity={0.2} />
-          </linearGradient>
-        </defs>
-        <XAxis dataKey="date" />
-        <YAxis dataKey="height" />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-
-        <Area type="monotone" dataKey="height" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-      </AreaChart>
+      <Chart data={decibelLevels} />
     </div>
   );
 }
