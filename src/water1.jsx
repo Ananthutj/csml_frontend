@@ -12,11 +12,6 @@ const WaterPage = () => {
     alignItems: 'center', // Center content vertically
   };
 
-  return <div style={waterPageStyle}>
-    <Graph/>
-    <h1  style={{color:'white'}}><center>water page</center></h1>
-  </div>;
-};
 
   const textContainerStyle = {
     flex: '1', // Allow the text container to take remaining space
