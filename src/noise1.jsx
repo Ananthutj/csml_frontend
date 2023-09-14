@@ -4,7 +4,7 @@ import './components/noise.css';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import NoiseChart from './components/noise/noiseChart';
+import NoiseChart from './noise/components/noiseChart';
 
 const NoisePage = () => {
   const noisePageStyle = {
