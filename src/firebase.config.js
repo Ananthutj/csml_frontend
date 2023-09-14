@@ -37,13 +37,13 @@ const firebaseConfigWater = {
   
 // Initialize Firebase
 const app = initializeApp(firebaseConfigNoise, 'devNoise');
-const dbNoise = initializeFirestore(app, { localCache: persistentLocalCache(/*settings*/{}) });
+const dbNoise = initializeFirestore(app);
 
 const appTest = initializeApp(firebaseConfigTest, 'testNoise');
-const dbTest = initializeFirestore(appTest, { localCache: persistentLocalCache(/*settings*/{}) });
+const dbTest = initializeFirestore(appTest);
 
 const appWater = initializeApp(firebaseConfigWater, 'devWater');
-const dbWater = initializeFirestore(appWater, { localCache: persistentLocalCache(/*settings*/{}) });
+const dbWater = initializeFirestore(appWater);
 
 
 export { dbNoise, dbTest, dbWater };
