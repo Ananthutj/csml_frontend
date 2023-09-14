@@ -9,11 +9,37 @@ function NoiseChart() {
     const levelQuery = query(decibelLevelsRef, orderBy('timestamp', 'asc'),);
 
     const [decibelLevels, setDecibelLevels] = useState([{ level: 0, time: 0 }]);
+    const [peakValues, setPeakValues] = useState([]);
 
     // const filterDataByDate = (data, startDate) => {
     //     const startTimestamp = startDate.getTime();
     //     return data.filter(entry => entry.time >= startTimestamp);
     // };
+
+    const calculatePeakValues = (data) => {
+        const interval = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const peakValues = [];
+
+        let startTime = data[0].timestamp;
+        let endTime = startTime + interval;
+        let maxLevel = data[0].data;
+
+        for (let i = 1; i < data.length; i++) {
+            if (data[i].time <= endTime) {
+                maxLevel = Math.max(maxLevel, data[i].level);
+            } else {
+                peakValues.push({ timestamp: endTime, peak: maxLevel });
+                startTime = endTime;
+                endTime += interval;
+                maxLevel = data[i].data;
+            }
+        }
+
+        // Add the last interval's peak value
+        peakValues.push({ timestamp: endTime, peak: maxLevel });
+
+        setPeakValues(peakValues);
+    };
 
     const fetchDecibelLevels = async () => {
         await getDocs(levelQuery).then((querySnapshot) => {

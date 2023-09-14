@@ -36,7 +36,8 @@ const NoisePage = () => {
     flexDirection: 'column',
     alignItems: 'center', // Optional: center components horizontally
     justifyContent: 'flex-start', // Optional: align components to the top
-    gap: '16px', // Optional: space between components
+    gap: '16px', 
+    marginLeft:'50px'// Optional: space between components
   };
 
   return (
@@ -46,12 +47,12 @@ const NoisePage = () => {
       </div>
 
       <div style={columnContainer}>
-      <div style={contentStyle} md={12}>
-        <Row style={{marginTop:'83px',marginRight:'61px'}}>
+      <div style={contentStyle}>
+        <Row style={{marginTop:'83px',marginRight:'99px'}}>
           <Col xs={12} md={4} >
             <Card style={{ width: '100%', ...cardStyle }}>
               <Card.Img variant="top" src="" />
-              <Card.Body style={{backgroundColor:'#008080'}}>
+              <Card.Body style={{backgroundColor:'#008080',height:'66px'}}>
                 <Card.Title>Real Time Analysis</Card.Title>
                 <Card.Text></Card.Text>
               </Card.Body>
