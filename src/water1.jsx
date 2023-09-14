@@ -13,6 +13,12 @@ const WaterPage = () => {
   };
 
 
+  return <div style={waterPageStyle}>
+    <Graph/>
+    <h1  style={{color:'white'}}><center>water page</center></h1>
+  </div>;
+;
+
   const textContainerStyle = {
     flex: '1', // Allow the text container to take remaining space
     padding: '20px', // Add some padding for spacing
@@ -28,5 +34,6 @@ const WaterPage = () => {
         </div>
   </div>
   );
+
 };
 export default WaterPage;
