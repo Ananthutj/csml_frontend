@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {db} from './firebase.config';
+import {dbWater} from './firebase.config';
 import { collection, getDocs, onSnapshot, query, orderBy} from 'firebase/firestore';
 import './graph.css';
 import Chart from './components/chart';
@@ -13,7 +13,7 @@ export default function Graph() {
   const subcollectionPath = 'cBPtGd6rxSRKJ9YpJNpxH7GvJhj1'; // Replace with your subcollection name
 
   // Create a reference to the subcollection within the document
-  const decibelLevelsRef = collection(db, `${collectionPath}/${documentId}/${subcollectionPath}`);
+  const decibelLevelsRef = collection(dbWater, `${collectionPath}/${documentId}/${subcollectionPath}`);
   const levelQuery = query(decibelLevelsRef, orderBy('timestamp', 'asc'), );
 
   const [decibelLevels, setData] = useState([{ level: 0, time: 0 }]);

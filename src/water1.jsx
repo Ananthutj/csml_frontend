@@ -12,6 +12,7 @@ const WaterPage = () => {
     alignItems: 'center', // Center content vertically
   };
 
+
   return <div style={waterPageStyle}>
     <Graph/>
     <h1  style={{color:'white'}}><center>water page</center></h1>
